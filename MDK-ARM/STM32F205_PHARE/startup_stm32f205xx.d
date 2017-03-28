@@ -1,0 +1,1 @@
+stm32f205_phare\startup_stm32f205xx.o: startup_stm32f205xx.s
