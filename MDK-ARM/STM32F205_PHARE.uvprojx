@@ -334,7 +334,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F205xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;        ../Drivers/STM32F2xx_HAL_Driver/Inc;        ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy;        ../Drivers/CMSIS/Device/ST/STM32F2xx/Include;        ../Drivers/CMSIS/Include;     ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;     ../Middlewares/Third_Party/FreeRTOS/Source/include;     ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</IncludePath>
+              <IncludePath>../Inc;  ../Drivers/STM32F2xx_HAL_Driver/Inc;  ../Drivers/STM32F2xx_HAL_Driver/Inc/Legacy;  ../Drivers/CMSIS/Device/ST/STM32F2xx/Include;  ../Drivers/CMSIS/Include;  ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM3;  ../Middlewares/Third_Party/FreeRTOS/Source/include;  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;  ..\Inc\bsp</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -517,6 +517,11 @@
               <FileType>1</FileType>
               <FilePath>../Src/freertos.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f2xx_hal_timebase_TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Src/stm32f2xx_hal_timebase_TIM.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -526,6 +531,11 @@
               <FileName>startup_stm32f205xx.s</FileName>
               <FileType>2</FileType>
               <FilePath>startup_stm32f205xx.s</FilePath>
+            </File>
+            <File>
+              <FileName>app_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\app_led.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -576,6 +586,16 @@
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Middlewares/Third_Party/FreeRTOS/Source/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>bsp</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\bsp\led\bsp_led.c</FilePath>
             </File>
           </Files>
         </Group>

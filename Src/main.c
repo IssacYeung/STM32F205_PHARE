@@ -44,6 +44,16 @@
 #include "main.h"
 #include "stm32f2xx_hal.h"
 #include "cmsis_os.h"
+#include "led/bsp_led.h"
+#include "app_led.h"
+
+static TaskHandle_t xHandleTaskUserIF = NULL;
+static TaskHandle_t xHandleTaskLED = NULL;
+
+
+static void vTaskTaskUserIF(void *pvParameters);
+
+static void AppTaskCreate (void);
 
 /* USER CODE BEGIN Includes */
 
@@ -117,6 +127,8 @@ int main(void)
   MX_USB_OTG_HS_PCD_Init();
   MX_TIM1_Init();
   MX_SDIO_Init();
+	
+	LED_GPIO_Init();
 
   /* USER CODE BEGIN 2 */
 
@@ -136,8 +148,8 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  //osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  //defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -149,7 +161,15 @@ int main(void)
  
 
   /* Start scheduler */
-  osKernelStart();
+  //osKernelStart();
+	
+	
+	/* 创建任务 */
+	AppTaskCreate();
+
+	
+  /* 启动调度，开始执行任务 */
+  vTaskStartScheduler();
   
   /* We should never get here as control is now taken by the scheduler */
 
@@ -177,10 +197,10 @@ void SystemClock_Config(void)
     /**Initializes the CPU, AHB and APB busses clocks 
     */
   //RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-	RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	//RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 10;
   RCC_OscInitStruct.PLL.PLLN = 200;
@@ -445,6 +465,27 @@ void StartDefaultTask(void const * argument)
 }
 
 /**
+  * @brief  Period elapsed callback in non blocking mode
+  * @note   This function is called  when TIM6 interrupt took place, inside
+  * HAL_TIM_IRQHandler(). It makes a direct call to HAL_IncTick() to increment
+  * a global variable "uwTick" used as application time base.
+  * @param  htim : TIM handle
+  * @retval None
+  */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+/* USER CODE BEGIN Callback 0 */
+
+/* USER CODE END Callback 0 */
+  if (htim->Instance == TIM6) {
+    HAL_IncTick();
+  }
+/* USER CODE BEGIN Callback 1 */
+
+/* USER CODE END Callback 1 */
+}
+
+/**
   * @brief  This function is executed in case of error occurrence.
   * @param  None
   * @retval None
@@ -487,4 +528,29 @@ void assert_failed(uint8_t* file, uint32_t line)
   * @}
 */ 
 
+
+
+
+/**
+  * 函数功能: 创建任务应用
+  * 输入参数: 无
+  * 返 回 值: 无
+  * 说    明: 无
+  */
+static void AppTaskCreate (void)
+{	
+
+	
+	  xTaskCreate( vTaskLED,   	      /* 任务函数  */
+                 "vTaskLED",     	  /* 任务名    */
+                 512,               	/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,              	/* 任务参数  */
+                 2,                 	/* 任务优先级*/
+                 &xHandleTaskLED );  /* 任务句柄  */
+	
+	
+	
+
+	
+}
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

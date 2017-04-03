@@ -49,3 +49,5 @@ stm32f205_phare\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timer
 stm32f205_phare\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
 stm32f205_phare\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
 stm32f205_phare\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+stm32f205_phare\main.o: ..\Inc\bsp\led/bsp_led.h
+stm32f205_phare\main.o: ../Inc/app_led.h
